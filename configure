@@ -1148,22 +1148,25 @@ fi
 echo "Rados Block Device engine     $rbd"
 
 ##########################################
-# Check whether we have setvbuf
-setvbuf="no"
+# check for gfapi
+gfapi="no"
 cat > $TMPC << EOF
-#include <stdio.h>
+#include <glusterfs/api/glfs.h>
+
 int main(int argc, char **argv)
 {
-  FILE *f = NULL;
-  char buf[80];
-  setvbuf(f, buf, _IOFBF, sizeof(buf));
+
+  glfs_t *g = glfs_new("foo");
+
   return 0;
 }
 EOF
-if compile_prog "" "" "setvbuf"; then
-  setvbuf="yes"
+if compile_prog "" "-lgfapi -lglusterfs" "gfapi"; then
+  LIBS="-lgfapi -lglusterfs $LIBS"
+  gfapi="yes"
 fi
-echo "setvbuf                       $setvbuf"
+echo "Gluster API engine            $gfapi"
+
 
 ##########################################
 # Check if we support stckf on s390
@@ -1325,6 +1328,9 @@ fi
 if test "$s390_z196_facilities" = "yes" ; then
   output_sym "CONFIG_S390_Z196_FACILITIES"
   CFLAGS="$CFLAGS -march=z9-109"
+fi
+if test "$gfapi" = "yes" ; then
+  output_sym "CONFIG_GFAPI"
 fi
 
 echo "LIBS+=$LIBS" >> $config_host_mak
