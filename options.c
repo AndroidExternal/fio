@@ -1533,6 +1533,12 @@ struct fio_option fio_options[FIO_MAX_OPTS] = {
 			    .help = "fallocate() file based engine",
 			  },
 #endif
+#ifdef CONFIG_GFAPI
+			  { .ival = "gfapi",
+			    .help = "Glusterfs libgfapi based engine"
+			  },
+#endif
+
 			  { .ival = "external",
 			    .help = "Load external engine (append name)",
 			  },
