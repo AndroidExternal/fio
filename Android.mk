@@ -33,13 +33,17 @@ lib_src_files := lib/rbtree.c lib/flist_sort.c lib/getrusage.c lib/hweight.c lib
 crc_src_files := crc/crc7.c crc/crc16.c crc/crc32.c crc/crc64.c crc/crc32c.c crc/crc32c-intel.c \
                  crc/sha1.c crc/sha256.c crc/sha512.c crc/md5.c crc/test.c crc/xxhash.c \
 
-engines_src_files := engines/cpu.c engines/mmap.c engines/sync.c engines/null.c engines/net.c \
-                     engines/sg.c engines/binject.c
+engines_src_files := engines/binject.c engines/cpu.c engines/mmap.c engines/null.c engines/net.c \
+                     engines/sg.c engines/sync.c \
+
+engines_src_files_64 := engines/splice.c
 
 LOCAL_SRC_FILES := $(main_src_files) \
                    $(lib_src_files) \
                    $(crc_src_files) \
-                   $(engines_src_files)
+                   $(engines_src_files) \
+
+LOCAL_SRC_FILES_64 += $(engines_src_files_64)
 
 LOCAL_MODULE := fio
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
@@ -92,5 +96,8 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.1.8-80-g890b\"" \
                 -g \
                 -rdynamic \
                 -std=gnu99 \
+
+LOCAL_CFLAGSS_64 += \
+                -DCONFIG_LINUX_SPLICE \
 
 include $(BUILD_EXECUTABLE)
