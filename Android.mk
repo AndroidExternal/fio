@@ -98,8 +98,12 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.1.8-80-g890b\"" \
                 -g \
                 -rdynamic \
                 -std=gnu99 \
+                -Wno-pointer-arith \
+                -Wno-sign-compare \
 
 LOCAL_CFLAGSS_64 += \
                 -DCONFIG_LINUX_SPLICE \
+
+LOCAL_ADDITIONAL_DEPENDENCIES += $(LOCAL_PATH)/Android.mk
 
 include $(BUILD_EXECUTABLE)
