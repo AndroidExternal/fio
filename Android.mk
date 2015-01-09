@@ -16,8 +16,10 @@
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
-# Cannot link gettime.c, undefined __aeabi_read_tp, when compiled with -fpie.
+ifeq ($(TARGET_ARCH),arm)
+# b/17167262, Cannot link gettime.c, undefined __aeabi_read_tp, when compiled with -fpie.
 LOCAL_CLANG := false
+endif
 
 LOCAL_CFLAGS_32 += -DBITS_PER_LONG=32 -DCONFIG_64BIT
 LOCAL_CFLAGS_64 += -DBITS_PER_LONG=64 -DCONFIG_32BIT
