@@ -56,7 +56,6 @@ LOCAL_MODULE_TAGS := debug
 LOCAL_SHARED_LIBRARIES := libdl
 LOCAL_STATIC_LIBRARIES := libcutils libz
 
-LOCAL_LDLIBS += -ldl
 LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.1.8-80-g890b\"" \
                 -DCONFIG_3ARG_AFFINITY \
                 -DCONFIG_CLOCK_GETTIME \
@@ -101,7 +100,7 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.1.8-80-g890b\"" \
                 -Wno-pointer-arith \
                 -Wno-sign-compare \
 
-LOCAL_CFLAGSS_64 += \
+LOCAL_CFLAGS_64 += \
                 -DCONFIG_LINUX_SPLICE \
 
 LOCAL_ADDITIONAL_DEPENDENCIES += $(LOCAL_PATH)/Android.mk
