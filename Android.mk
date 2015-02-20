@@ -56,8 +56,6 @@ LOCAL_MODULE_TAGS := debug
 LOCAL_SHARED_LIBRARIES := libdl
 LOCAL_STATIC_LIBRARIES := libcutils libz
 
-LOCAL_C_INCLUDES += external/zlib
-
 LOCAL_LDLIBS += -ldl
 LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.1.8-80-g890b\"" \
                 -DCONFIG_3ARG_AFFINITY \
