@@ -1144,10 +1144,14 @@ void sum_thread_stats(struct thread_stat *dst, struct thread_stat *src, int nr)
 		int m;
 
 		for (m = 0; m < FIO_IO_U_PLAT_NR; m++) {
+			/* HACK to prevent bus error in arm GCC 4.9 */
+			dst->io_u_plat[k][m]+=1;
 			if (!dst->unified_rw_rep)
 				dst->io_u_plat[k][m] += src->io_u_plat[k][m];
 			else
 				dst->io_u_plat[0][m] += src->io_u_plat[k][m];
+			/* HACK to prevent bus error in arm GCC 4.9 */
+			dst->io_u_plat[k][m]-=1;
 		}
 	}
 
