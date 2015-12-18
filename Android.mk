@@ -96,6 +96,8 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.2.6\"" \
                 -std=gnu99 \
                 -Wno-pointer-arith \
                 -Wno-sign-compare \
+                -Wno-unused-parameter \
+                -Wno-unused-variable \
 
 LOCAL_CFLAGS_64 += \
                 -DCONFIG_LINUX_SPLICE \
