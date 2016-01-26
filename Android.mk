@@ -36,7 +36,7 @@ crc_src_files := crc/crc7.c crc/crc16.c crc/crc32.c crc/crc64.c crc/crc32c.c crc
                  crc/fnv.c crc/murmur3.c
 
 engines_src_files := engines/cpu.c engines/mmap.c engines/null.c engines/net.c \
-                     engines/sg.c engines/sync.c engines/gfapi.h
+                     engines/sg.c engines/sync.c
 
 engines_src_files_64 := engines/splice.c
 
@@ -101,7 +101,5 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.2.6\"" \
 
 LOCAL_CFLAGS_64 += \
                 -DCONFIG_LINUX_SPLICE \
-
-LOCAL_ADDITIONAL_DEPENDENCIES += $(LOCAL_PATH)/Android.mk
 
 include $(BUILD_EXECUTABLE)
