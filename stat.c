@@ -1584,6 +1584,8 @@ void __show_run_stats(void)
 		unsigned long long bw;
 
 		ts = &threadstats[i];
+		if (ts->groupid == -1)
+			continue;
 		rs = &runstats[ts->groupid];
 		rs->kb_base = ts->kb_base;
 		rs->unit_base = ts->unit_base;
