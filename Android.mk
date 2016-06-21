@@ -16,6 +16,7 @@
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
+SRCDIR := $(LOCAL_PATH)
 ifeq ($(TARGET_ARCH),arm)
 # b/17167262, Cannot link gettime.c, undefined __aeabi_read_tp, when compiled with -fpie.
 LOCAL_CLANG := false
@@ -24,32 +25,18 @@ endif
 LOCAL_CFLAGS_32 += -DBITS_PER_LONG=32 -DCONFIG_64BIT
 LOCAL_CFLAGS_64 += -DBITS_PER_LONG=64 -DCONFIG_32BIT
 
-main_src_files := gettime.c fio.c ioengines.c init.c stat.c log.c time.c \
-                  filesetup.c eta.c verify.c memory.c io_u.c parse.c mutex.c options.c \
-                  smalloc.c filehash.c helpers.c profile.c debug.c backend.c \
-                  cconv.c client.c filelock.c flow.c gettime-thread.c idletime.c io_u_queue.c \
-                  iolog.c json.c libfio.c memalign.c profiles/act.c profiles/tiobench.c server.c \
-                  td_error.c diskutil.c blktrace.c trim.c fifo.c cgroup.c
-
-lib_src_files := lib/rbtree.c lib/flist_sort.c lib/getrusage.c lib/hweight.c lib/ieee754.c lib/lfsr.c \
-                 lib/num2str.c lib/prio_tree.c lib/rand.c lib/zipf.c lib/inet_aton.c lib/axmap.c \
-                 lib/bloom.c lib/linux-dev-lookup.c lib/tp.c
-
-crc_src_files := crc/crc7.c crc/crc16.c crc/crc32.c crc/crc64.c crc/crc32c.c crc/crc32c-intel.c \
-                 crc/sha1.c crc/sha256.c crc/sha512.c crc/md5.c crc/test.c crc/xxhash.c \
-                 crc/fnv.c crc/murmur3.c
-
-engines_src_files := engines/cpu.c engines/mmap.c engines/null.c engines/net.c \
-                     engines/sg.c engines/sync.c engines/gfapi.h
-
-engines_src_files_64 := engines/splice.c
-
-LOCAL_SRC_FILES := $(main_src_files) \
-                   $(lib_src_files) \
-                   $(crc_src_files) \
-                   $(engines_src_files) \
-
-LOCAL_SRC_FILES_64 += $(engines_src_files_64)
+LOCAL_SRC_FILES := $(patsubst $(SRCDIR)/%,%,$(wildcard $(SRCDIR)/crc/*.c)) \
+		$(patsubst $(SRCDIR)/%,%,$(wildcard $(SRCDIR)/lib/*.c)) \
+		gettime.c ioengines.c init.c stat.c log.c time.c filesetup.c \
+		eta.c verify.c memory.c io_u.c parse.c mutex.c options.c \
+		smalloc.c filehash.c profile.c debug.c engines/cpu.c \
+		engines/mmap.c engines/sync.c engines/null.c engines/net.c \
+		server.c client.c iolog.c backend.c libfio.c flow.c cconv.c \
+		gettime-thread.c helpers.c json.c idletime.c td_error.c \
+		profiles/tiobench.c profiles/act.c io_u_queue.c filelock.c \
+		workqueue.c rate-submit.c optgroup.c helper_thread.c \
+		diskutil.c fifo.c blktrace.c trim.c cgroup.c engines/splice.c \
+		profiles/tiobench.c oslib/linux-dev-lookup.c fio.c
 
 LOCAL_MODULE := fio
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
@@ -58,7 +45,7 @@ LOCAL_MODULE_TAGS := debug
 LOCAL_SHARED_LIBRARIES := libdl
 LOCAL_STATIC_LIBRARIES := libcutils libz
 
-LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.2.6\"" \
+LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.12\"" \
                 -DCONFIG_3ARG_AFFINITY \
                 -DCONFIG_CLOCK_GETTIME \
                 -DCONFIG_CLOCK_MONOTONIC \
