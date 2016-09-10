@@ -34,8 +34,8 @@ LOCAL_SRC_FILES := $(patsubst $(SRCDIR)/%,%,$(wildcard $(SRCDIR)/crc/*.c)) \
 		gettime-thread.c helpers.c json.c idletime.c td_error.c \
 		profiles/tiobench.c profiles/act.c io_u_queue.c filelock.c \
 		workqueue.c rate-submit.c optgroup.c helper_thread.c \
-		diskutil.c fifo.c blktrace.c trim.c cgroup.c engines/splice.c \
-		profiles/tiobench.c oslib/linux-dev-lookup.c fio.c
+		diskutil.c fifo.c blktrace.c trim.c cgroup.c fio.c \
+		oslib/linux-dev-lookup.c
 
 engines_src_files_64 := engines/splice.c
 
@@ -48,7 +48,7 @@ LOCAL_MODULE_TAGS := debug
 LOCAL_SHARED_LIBRARIES := libdl
 LOCAL_STATIC_LIBRARIES := libcutils libz
 
-LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.12\"" \
+LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.12-AndroidExternal\"" \
                 -DCONFIG_3ARG_AFFINITY \
                 -DCONFIG_CLOCK_GETTIME \
                 -DCONFIG_CLOCK_MONOTONIC \
@@ -85,7 +85,7 @@ LOCAL_CFLAGS += -DFIO_VERSION="\"fio-2.12\"" \
                 -Wwrite-strings \
                 -ffast-math \
                 -fno-omit-frame-pointer \
-                -g \
+                -g0 \
                 -rdynamic \
                 -std=gnu99 \
                 -Wno-pointer-arith \
